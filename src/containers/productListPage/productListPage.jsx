@@ -1,64 +1,31 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import Layout from "../../component/Layout/layout.jsx";
-import {useDispatch, useSelector} from "react-redux";
-import {getProductsBySlug} from "../../actions/action.js";
-import {useParams} from "react-router-dom";
 import './style.css'
+import ProductStore from "./productStore/productStore.jsx";
+import {useLocation} from "react-router-dom";
+import getParams from "../../utils/getParams.js";
+import ProductPage from "./productPage/productPage.jsx";
 
 const ProductListPage = (props) => {
-    const dispatch = useDispatch()
-    const params = useParams();
-    //console.log(params)
-    const product = useSelector(state => state.product)
-    // console.log(product)
-    const [priceRange, setPriceRange] = useState({
-        under5k: 5000,
-        under10k: 10000,
-        under15k: 15000,
-        under20k: 20000,
-        under30k: 30000,
-    })
-    useEffect(() => {
-        // console.log(params.slug)
-        dispatch(getProductsBySlug(params.slug))
-    }, [])
+     const location = useLocation()
+
+    const renderProduct = () => {
+       //console.log(location)
+      const params =getParams( location.search)
+       // console.log(params)
+        let content = null
+        if (params.type === 'store') {
+                 content = <ProductStore {...props}/>
+        }
+        else if (params.type === 'page') {
+                  content = <ProductPage {...props}/>
+        }
+        return content
+    }
+
     return (
         <Layout>
-            {
-                Object.keys(product.productsByPrice).map((key, index) => {
-                    return (
-                        <div key={key} className="card">
-                            <div className="card-header">
-                                <div>{params.slug.split('-')[0]} mobile under {priceRange[key]}K</div>
-                                <button>view all</button>
-                            </div>
-                            <div style={{display: 'flex'}}>
-                                {
-                                    product.productsByPrice[key].map(product =>
-                                        <div key={product.name} className="product-container">
-                                            <div className="productImageContainer">
-                                                <img
-                                                    src={product.productPictures[0].img}
-                                                    alt=""/>
-                                            </div>
-                                            <div className="productInfo">
-                                                <div style={{margin: '5px 0'}}>{product.name}</div>
-                                                <div>
-                                                    <span>4.3</span>&nbsp;
-                                                    <span>335</span>
-                                                </div>
-                                                <div className="productPrice">TK{product.price}</div>
-                                            </div>
-                                        </div>
-                                    )
-                                }
-
-                            </div>
-                        </div>
-                    )
-                })
-            }
-
+            {renderProduct()}
         </Layout>
     );
 };
