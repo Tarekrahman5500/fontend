@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import {Link, useParams} from "react-router-dom";
 import {getProductsBySlug} from "../../../actions/action.js";
 import './style.css'
 const ProductStore = (props) => {
@@ -33,7 +33,9 @@ const ProductStore = (props) => {
                             <div style={{display: 'flex'}}>
                                 {
                                     product.productsByPrice[key].map(product =>
-                                        <div key={product.name} className="product-container">
+                                        <Link style={{
+                                            display: 'block'
+                                        }} to={`/${product.slug}/${product._id}/p`} key={product.name} className="product-container">
                                             <div className="productImageContainer">
                                                 <img
                                                     src={product.productPictures[0].img}
@@ -47,7 +49,7 @@ const ProductStore = (props) => {
                                                 </div>
                                                 <div className="productPrice">TK{product.price}</div>
                                             </div>
-                                        </div>
+                                        </Link>
                                     )
                                 }
 

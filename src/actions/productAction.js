@@ -55,3 +55,27 @@ export const getProductPage = (payload) => {
 
     }
 }
+
+export const getProductDetailsById = (payload) => {
+    return async dispatch => {
+        dispatch({ type: productConstants.GET_PRODUCT_DETAILS_BY_ID_REQUEST });
+        let res;
+        try {
+            const { productId } = payload.params;
+            res = await axios.get(`product/${productId}`);
+            console.log(res);
+            dispatch({
+                type: productConstants.GET_PRODUCT_DETAILS_BY_ID_SUCCESS,
+                payload: { productDetails: res.data.product }
+            });
+
+        } catch(error) {
+            console.log(error.response.data.error);
+            dispatch({
+                type: productConstants.GET_PRODUCT_DETAILS_BY_ID_FAILURE,
+                payload: { error: error.response.data.error }
+            });
+        }
+
+    }
+}
