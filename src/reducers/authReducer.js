@@ -20,6 +20,7 @@ export default (state = initialState, action) => {
         state = {
             ...state,
             authenticating: true,
+             error: null,
         }
     }
     if (action.type === authConstants.LOGIN_SUCCESS) {
@@ -29,6 +30,7 @@ export default (state = initialState, action) => {
             token: action.payload.token,
             authenticate: true,
             authenticating: false,
+            error: null
         }
     }
     if (action.type === authConstants.LOGIN_FAILURE) {

@@ -5,7 +5,7 @@ import goldenStar from '../../images/logo/golden-star.png';
 import flipkartLogo from '../../images/logo/flipkart.png';
 import {IoIosArrowDown, IoIosCart, IoIosSearch} from 'react-icons/io';
 import {useDispatch, useSelector} from "react-redux";
-import {login} from "../../actions/action.js";
+import {login, signOut} from "../../actions/action.js";
 
 const Header = () => {
     const [email, setEmail] = useState('');
@@ -23,6 +23,10 @@ const Header = () => {
             setLoginModal(false)
         }
     }, [auth.authenticate])
+
+    const logout = () => {
+        dispatch(signOut());
+    };
 
     const renderLoggedInMenu = () => {
         return (
@@ -43,7 +47,7 @@ const Header = () => {
                     {label: "Rewards", href: "", icon: null},
                     {label: "Notifications", href: "", icon: null},
                     {label: "Gift Cards", href: "", icon: null},
-                    {label: "Logout", href: "", icon: null, /*onClick: logout*/},
+                    {label: "Logout", href: "", icon: null, onClick: logout},
                 ]}
             />
         )

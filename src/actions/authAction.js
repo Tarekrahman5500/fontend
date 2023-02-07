@@ -22,6 +22,7 @@ export const login = (user) => {
                     payload: {
                         token,
                         user
+
                     }
                 })
                 // if valid to login
@@ -74,6 +75,7 @@ export const isUserLoggedIn = () => {
 }
 
 export const signOut = () => {
+   // console.log('here')
     return async dispatch => {
         try {
            // localStorage.clear();

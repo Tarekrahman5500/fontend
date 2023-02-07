@@ -1,11 +1,24 @@
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.flexRow {
+    display: flex;
+}
+
+.sb {
+    justify-content: space-between;
+}
+
 body {
-  margin: 0;
-  font-family: 'Open Sans', sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    background: #f1f3f6;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    font-family: Roboto, source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
