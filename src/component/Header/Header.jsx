@@ -6,6 +6,7 @@ import flipkartLogo from '../../images/logo/flipkart.png';
 import {IoIosArrowDown, IoIosCart, IoIosSearch} from 'react-icons/io';
 import {useDispatch, useSelector} from "react-redux";
 import {login, signOut} from "../../actions/action.js";
+import {Link} from "react-router-dom";
 
 const Header = () => {
     const [email, setEmail] = useState('');
@@ -72,7 +73,10 @@ const Header = () => {
                 firstMenu={
                     <div className="firstmenu">
                         <span>New Customer?</span>
-                        <a style={{color: '#2874f0'}}>Sign Up</a>
+                        <a onClick={() => {
+                            setLoginModal(true);
+                            //setSignup(true);
+                        }} style={{color: '#2874f0'}}>Sign Up</a>
                     </div>
                 }
             />
@@ -94,7 +98,7 @@ const Header = () => {
                         </div>
                         <div className="rightspace">
 
-
+                         <div className="loginInputContainer">
                             <MaterialInput
                                 type="text"
                                 label="Enter Email/Enter Mobile Number"
@@ -118,10 +122,7 @@ const Header = () => {
                                 }}
                                 onClick={userLogin}
                             />
-                            {
-                                auth.error && <p style={{color: 'red'}}>{auth.error}</p>
-                            }
-
+                         </div>
                         </div>
                     </div>
                 </div>
@@ -173,10 +174,11 @@ const Header = () => {
                         ]}
                     />
                     <div>
-                        <a className="cart">
+                        <Link to={`/cart`} className="cart">
+
                             <IoIosCart/>
                             <span style={{margin: '0 10px'}}>Cart</span>
-                        </a>
+                        </Link>
                     </div>
                 </div>
 

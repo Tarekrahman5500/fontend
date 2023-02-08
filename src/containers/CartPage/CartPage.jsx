@@ -5,12 +5,15 @@ import CardIndex from "../../component/ui/card/CardIndex.jsx";
 import CartItem from "./cartItem/cartItem.jsx";
 import {addToCart, getCartItems, removeCartItem} from "../../actions/action.js";
 import './style.css'
+import {MaterialButton} from "../../component/MaterialUI/materialUI.jsx";
+import {useNavigate} from "react-router-dom";
 
 const CartPage = (props) => {
     const cart = useSelector(state => state.cart)
     const auth = useSelector(state => state.auth);
     const [cartItems, setCartItems] = useState(cart.cartItems);
     const dispatch = useDispatch();
+    const navigate = useNavigate()
 
     useEffect(() => {
         setCartItems(cart.cartItems);
@@ -37,21 +40,48 @@ const CartPage = (props) => {
     };
     return (
         <Layout>
-            <CardIndex
-                headerLeft={`My Cart`}
-                headerRight={<div>Deliver to</div>}
-            >
-                {Object.keys(cartItems).map((key, index) =>
-                    <CartItem
-                        key={key}
-                        cartItem={cartItems[key]}
-                        onQuantityInc={onQuantityIncrement}
-                        onQuantityDec={onQuantityDecrement}
-                        onRemoveCartItem={onRemoveCartItem}
-                    />
-                )}
+            <div className="cartContainer" style={{alignItems: "flex-start"}}>
+                <CardIndex
+                    headerLeft={`My Cart`}
+                    headerRight={<div>Deliver to</div>}
+                    style={{width: "calc(100% - 400px)", overflow: "hidden"}}
+                >
+                    {Object.keys(cartItems).map((key, index) => (
+                        <CartItem
+                            key={key}
+                            cartItem={cartItems[key]}
+                            onQuantityInc={onQuantityIncrement}
+                            onQuantityDec={onQuantityDecrement}
+                            onRemoveCartItem={onRemoveCartItem}
+                        />
+                    ))}
+                    <div
+                        style={{
+                            width: "100%",
+                            display: "flex",
+                            background: "#ffffff",
+                            justifyContent: "flex-end",
+                            boxShadow: "0 0 10px 10px #eee",
+                            padding: "10px 0",
+                            boxSizing: "border-box",
+                        }}
+                    >
+                        <div style={{width: "250px"}}>
+                            <MaterialButton
+                                title="PLACE ORDER"
+                                onClick={() => navigate(`/checkout`)}
+                            />
+                        </div>
+                    </div>
 
-            </CardIndex>
+                </CardIndex>
+                <CardIndex headerLeft='Price'
+                           style={{
+                               width: '380px'
+                           }}>
+
+                </CardIndex>
+            </div>
         </Layout>
     );
 };
