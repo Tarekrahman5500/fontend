@@ -1,4 +1,4 @@
-import {authConstants} from "./constants.js";
+import {authConstants, cartConstants} from "./constants.js";
 import axios from "../helpers/axios.js";
 
 export const login = (user) => {
@@ -35,8 +35,8 @@ export const login = (user) => {
                 })
             }
         } catch (err) {
-            if(err.response.data.error) {
-             //   console.log(err.response.data.error)
+            if (err.response.data.error) {
+                //   console.log(err.response.data.error)
                 dispatch({
                     type: authConstants.LOGIN_FAILURE,
                     payload: {
@@ -75,28 +75,29 @@ export const isUserLoggedIn = () => {
 }
 
 export const signOut = () => {
-   // console.log('here')
+    // console.log('here')
     return async dispatch => {
         try {
-           // localStorage.clear();
-          //  dispatch({type: authConstants.LOGOUT_SUCCESS});
+            // localStorage.clear();
+            //  dispatch({type: authConstants.LOGOUT_SUCCESS});
 
             dispatch({type: authConstants.LOGOUT_REQUEST});
             const res = await axios.post(`/signout`);
-           // console.log(res)
+            // console.log(res)
             if (res.status === 200) {
-                localStorage.clear();
+                localStorage.clear()
                 dispatch({type: authConstants.LOGOUT_SUCCESS});
+                dispatch({type: cartConstants.RESET_CART});
             } else {
-             //  console.log('here')
+                //  console.log('here')
                 dispatch({
                     type: authConstants.LOGOUT_FAILURE,
                     payload: {error: res.data.error}
                 });
             }
         } catch (err) {
-           // console.log(err + 'hi')
-          //  console.log(res)
+            // console.log(err + 'hi')
+            //  console.log(res)
             if (err.response && err.response.data) {
                 // print the exception message from axios response
                 dispatch({
