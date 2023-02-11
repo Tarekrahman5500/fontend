@@ -5,6 +5,7 @@ import ProductStore from "./productStore/productStore.jsx";
 import {useLocation} from "react-router-dom";
 import getParams from "../../utils/getParams.js";
 import ProductPage from "./productPage/productPage.jsx";
+import ClothAndAccessories from "./clothingAndAccessories/clothAndAccessories.jsx";
 
 const ProductListPage = (props) => {
      const location = useLocation()
@@ -20,6 +21,7 @@ const ProductListPage = (props) => {
         else if (params.type === 'page') {
                   content = <ProductPage {...props}/>
         }
+        else  content = <ClothAndAccessories {...props} />
         return content
     }
 

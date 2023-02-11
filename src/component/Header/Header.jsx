@@ -65,10 +65,17 @@ const Header = () => {
                 menus={[
                     {label: 'My Profile', href: '', icon: null},
                     {label: 'Plus Zone', href: '', icon: null},
-                    {label: 'Orders', href: '', icon: null},
-                    {label: 'Wishlist', href: '', icon: null},
-                    {label: 'Rewards', href: '', icon: null},
-                    {label: 'Gift Cards', href: '', icon: null},
+                    {
+                        label: "Orders",
+                        href: `/account/orders`,
+                        icon: null,
+                        onClick: () => {
+                            !auth.authenticate && setLoginModal(true);
+                        },
+                    },
+                    {label: "Wishlist", href: "", icon: null},
+                    {label: "Rewards", href: "", icon: null},
+                    {label: "Gift Cards", href: "", icon: null},
                 ]}
                 firstMenu={
                     <div className="firstmenu">
@@ -98,31 +105,31 @@ const Header = () => {
                         </div>
                         <div className="rightspace">
 
-                         <div className="loginInputContainer">
-                            <MaterialInput
-                                type="text"
-                                label="Enter Email/Enter Mobile Number"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)}
-                            />
+                            <div className="loginInputContainer">
+                                <MaterialInput
+                                    type="text"
+                                    label="Enter Email/Enter Mobile Number"
+                                    value={email}
+                                    onChange={(e) => setEmail(e.target.value)}
+                                />
 
-                            <MaterialInput
-                                type="password"
-                                label="Enter Password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                rightElement={<a href="#">Forgot?</a>}
-                            />
-                            <MaterialButton
-                                title="Login"
-                                bgColor="#fb641b"
-                                textColor="#ffffff"
-                                style={{
-                                    margin: '40px 0'
-                                }}
-                                onClick={userLogin}
-                            />
-                         </div>
+                                <MaterialInput
+                                    type="password"
+                                    label="Enter Password"
+                                    value={password}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    rightElement={<a href="#">Forgot?</a>}
+                                />
+                                <MaterialButton
+                                    title="Login"
+                                    bgColor="#fb641b"
+                                    textColor="#ffffff"
+                                    style={{
+                                        margin: '40px 0'
+                                    }}
+                                    onClick={userLogin}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
