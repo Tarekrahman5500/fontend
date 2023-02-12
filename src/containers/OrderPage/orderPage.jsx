@@ -7,6 +7,7 @@ import {IoIosArrowForward} from "react-icons/io";
 import {Breed} from "../../component/MaterialUI/materialUI.jsx";
 import Layout from "../../component/Layout/layout.jsx";
 import CardIndex from "../../component/ui/card/CardIndex.jsx";
+import {Link} from "react-router-dom";
 
 const OrderPage = () => {
     const dispatch = useDispatch();
@@ -30,31 +31,36 @@ const OrderPage = () => {
                 {user.orders.map((order) => {
                     return order.items.map((item, index) => (
                         <CardIndex style={{margin: "5px 0"}} key={index}>
-                            <div className="orderItemContainer" key={index}>
-                                <div className="orderImgContainer">
-                                    <img
-                                        key={index}
-                                        className="orderImg"
-                                        src={
-                                            item.productId.productPictures[0].img
-                                        }
-                                        alt=""/>
-                                </div>
-                                <div className="orderRow">
-                                    <div className="orderName">{item.productId.name}</div>
-                                    <div className="orderPrice" key={index}>
-                                        <BiRupee/>
-                                        {item.payablePrice}
+                            <Link
+                                to={`/order_details/${order._id}`}
+                                className="orderItemContainer"
+                            >
+                                <div className="orderItemContainer" key={index}>
+                                    <div className="orderImgContainer">
+                                        <img
+                                            key={index}
+                                            className="orderImg"
+                                            src={
+                                                item.productId.productPictures[0].img
+                                            }
+                                            alt=""/>
                                     </div>
-                                    <div>{order.paymentStatus}</div>
+                                    <div className="orderRow">
+                                        <div className="orderName">{item.productId.name}</div>
+                                        <div className="orderPrice" key={index}>
+                                            <BiRupee/>
+                                            {item.payablePrice}
+                                        </div>
+                                        <div>{order.paymentStatus}</div>
+                                    </div>
                                 </div>
-                            </div>
+                            </Link>
                         </CardIndex>
                     ));
                 })}
             </div>
         </Layout>
     );
-};
+}
 
 export default OrderPage;

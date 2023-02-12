@@ -5,7 +5,7 @@ import goldenStar from '../../images/logo/golden-star.png';
 import flipkartLogo from '../../images/logo/flipkart.png';
 import {IoIosArrowDown, IoIosCart, IoIosSearch} from 'react-icons/io';
 import {useDispatch, useSelector} from "react-redux";
-import {login, signOut} from "../../actions/action.js";
+import {login, signOut, signup as _signup} from "../../actions/action.js";
 import {Link} from "react-router-dom";
 
 const Header = () => {
@@ -13,11 +13,36 @@ const Header = () => {
     const [password, setPassword] = useState('');
     const [loginModal, setLoginModal] = useState(false);
     const dispatch = useDispatch()
-    const auth = useSelector((state) => state.auth);
+    const auth = useSelector(state => state.auth);
+    const cart = useSelector(state => state.cart);
+    const [signup, setSignup] = useState(false);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [error, setError] = useState("");
+
+    const userSignup = () => {
+        const user = {firstName, lastName, email, password};
+        if (
+            firstName === "" ||
+            lastName === "" ||
+            email === "" ||
+            password === ""
+        ) {
+            return;
+        }
+
+        dispatch(_signup(user));
+    };
+
 
     const userLogin = () => {
-        dispatch(login({email, password}))
+        if (signup) {
+            userSignup();
+        } else {
+            dispatch(login({email, password}));
+        }
     }
+
     useEffect(() => {
 
         if (auth.authenticate) {
@@ -58,7 +83,10 @@ const Header = () => {
         return (
             <DropdownMenu
                 menu={
-                    <a className="loginButton" onClick={() => setLoginModal(true)}>
+                    <a className="loginButton" onClick={() => {
+                        setLoginModal(true)
+                        setSignup(false);
+                    }}>
                         Login
                     </a>
                 }
@@ -82,7 +110,7 @@ const Header = () => {
                         <span>New Customer?</span>
                         <a onClick={() => {
                             setLoginModal(true);
-                            //setSignup(true);
+                            setSignup(true);
                         }} style={{color: '#2874f0'}}>Sign Up</a>
                     </div>
                 }
@@ -106,28 +134,56 @@ const Header = () => {
                         <div className="rightspace">
 
                             <div className="loginInputContainer">
+                                {auth.error && (
+                                    <div style={{color: "red", fontSize: 12}}>{auth.error}</div>
+                                )}
+                                {signup && (
+                                    <MaterialInput
+                                        type="text"
+                                        label="First Name"
+                                        value={firstName}
+                                        onChange={(e) => setFirstName(e.target.value)}
+                                    />
+                                )}
+                                {signup && (
+                                    <MaterialInput
+                                        type="text"
+                                        label="Last Name"
+                                        value={lastName}
+                                        onChange={(e) => setLastName(e.target.value)}
+                                    />
+                                )}
+
                                 <MaterialInput
                                     type="text"
-                                    label="Enter Email/Enter Mobile Number"
+                                    label="Email/Mobile Number"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)}
                                 />
-
                                 <MaterialInput
                                     type="password"
-                                    label="Enter Password"
+                                    label="Password"
                                     value={password}
                                     onChange={(e) => setPassword(e.target.value)}
-                                    rightElement={<a href="#">Forgot?</a>}
+                                    // rightElement={<a href="#">Forgot?</a>}
                                 />
                                 <MaterialButton
-                                    title="Login"
+                                    title={signup ? "Register" : "Login"}
                                     bgColor="#fb641b"
                                     textColor="#ffffff"
                                     style={{
-                                        margin: '40px 0'
+                                        margin: "40px 0 20px 0",
                                     }}
                                     onClick={userLogin}
+                                />
+                                <p style={{textAlign: "center"}}>OR</p>
+                                <MaterialButton
+                                    title="Request OTP"
+                                    bgColor="#ffffff"
+                                    textColor="#2874f0"
+                                    style={{
+                                        margin: "20px 0",
+                                    }}
                                 />
                             </div>
                         </div>

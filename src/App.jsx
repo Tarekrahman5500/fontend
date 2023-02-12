@@ -9,6 +9,7 @@ import CartPage from "./containers/CartPage/CartPage.jsx";
 import {updateCart} from "./actions/cartAction.js";
 import CheckOut from "./containers/checkOut/checkOut.jsx";
 import OrderPage from "./containers/OrderPage/orderPage.jsx";
+import OrderDetailsPage from "./containers/orderDetailsPage/orderDetailsPage.jsx";
 
 function App() {
     const dispatch = useDispatch()
@@ -33,6 +34,7 @@ function App() {
             <Route path="/:productSlug/:productId/p" element={<ProductDetailsPage/>}/>
             <Route path="/checkout" element={<CheckOut/>}/>
             <Route path="/account/orders" element={<OrderPage/>} />
+             <Route path="/order_details/:orderId" element={<OrderDetailsPage/>} />
             {/*<Route path="/products" element={<Products/>}/>
                 <Route path="/orders" element={<Orders/>}/>
                 <Route path="/category" element={<Category/>}/>*/}

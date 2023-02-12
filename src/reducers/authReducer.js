@@ -1,26 +1,15 @@
 import {authConstants} from "../actions/constants.js";
 
 const initialState = {
-    token: null,
-    user: {
-        firstName: '',
-        lastName: '',
-        email: '',
-        picture: ''
-    },
-    authenticate: false,
-    authenticating: false,
-    loading: false,
-    error: null,
-    message: ''
+    token: null, user: {
+        firstName: '', lastName: '', email: '', picture: ''
+    }, authenticate: false, authenticating: false, loading: false, error: null, message: ''
 }
 export default (state = initialState, action) => {
     // console.log(action)
     if (action.type === authConstants.LOGIN_REQUEST) {
         state = {
-            ...state,
-            authenticating: true,
-             error: null,
+            ...state, authenticating: true, error: null,
         }
     }
     if (action.type === authConstants.LOGIN_SUCCESS) {
@@ -35,15 +24,12 @@ export default (state = initialState, action) => {
     }
     if (action.type === authConstants.LOGIN_FAILURE) {
         state = {
-            ...state,
-            error: action.payload.error,
-            loading: false
+            ...state, error: action.payload.error, loading: false
         }
     }
     if (action.type === authConstants.LOGOUT_REQUEST) {
         state = {
-            ...state,
-            loading: true
+            ...state, loading: true
         }
     }
     if (action.type === authConstants.LOGOUT_SUCCESS) {
@@ -54,10 +40,13 @@ export default (state = initialState, action) => {
 
     if (action.type === authConstants.LOGOUT_FAILURE) {
         state = {
-            ...state,
-            error: action.payload.error,
-            loading: false
+            ...state, error: action.payload.error, loading: false
         }
+    }
+    if (action.type === authConstants.SIGNUP_FAILURE) {
+        state = {
+            ...state, error: action.payload.error,
+        };
     }
     return state
 }
